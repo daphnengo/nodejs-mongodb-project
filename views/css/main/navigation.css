@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.main-header {
+  width: 100%;
+  height: 3.5rem;
+  background-color: #6f026f;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.main-header__nav {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-header__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  text-decoration: none;
+}
+
+.main-header__nav-list-item {
+  margin: 0 1rem;
+  padding: 0;
+}
+
+.main-header__nav-list-item a {
+  text-decoration: none;
+  color: greenyellow;
+}
