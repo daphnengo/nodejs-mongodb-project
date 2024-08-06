@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 const { mongoConnect } = require('./util/database');
 const errorsRoutes = require('./routes/errors');
-// const storeRoutes = require('./routes/store');
+const storeRoutes = require('./routes/store');
 const adminRoutes = require('./routes/admin');
 
 const app = express();
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 app.use(errorsRoutes);
-// app.use(storeRoutes);
+app.use(storeRoutes);
 app.use('/admin', adminRoutes);
 
 mongoConnect(() => {

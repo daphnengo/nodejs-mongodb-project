@@ -1,7 +1,7 @@
 const ProductModel = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
-  ProductModel.findAll()
+  ProductModel.findAllProducts()
     .then(allProducts => {
       res.render('store/products.html', {
         products: allProducts,
