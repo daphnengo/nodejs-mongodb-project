@@ -1,0 +1,17 @@
+.product-details__title,
+.product-details__image,
+.product-details__price,
+.product-details__description,
+.product-details__cart {
+  display: flex;
+  justify-content: center;
+  color: #6f026f;
+}
+
+.product-details__title {
+  border-bottom: 2px solid #6f026f;
+}
+
+img {
+  max-width: 300px;
+}

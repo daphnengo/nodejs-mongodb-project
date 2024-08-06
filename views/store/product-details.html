@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/css/main/navigation.css">
+    <link rel="stylesheet" href="/css/main/main.css">
+    <link rel="stylesheet" href="/css/store/product-details.css">
+  </head>
+</head>
+
+<body>
+  <header class="main-header">
+    <nav class="main-header__nav">
+      <ul class="main-header__nav-list">
+        <li class="main-header__nav-list-item">
+          <a href="/">Products</a>
+        </li>
+        <li class="main-header__nav-list-item">
+          <a href="/cart">Cart</a>
+        </li>
+        <li class="main-header__nav-list-item">
+          <a href="/orders">Orders</a>
+        </li>
+        <li class="main-header__nav-list-item">
+          <a href="/admin/add-product">Add product</a>
+        </li>
+        <li class="main-header__nav-list-item">
+          <a href="/admin/manage-products">Manage products</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1 class="product-details__title"><%= product.title %></h1>
+    <div class="product-details__image">
+      <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+    </div>
+    <h2 class="product-details__price">$ <%= product.price %></h2>
+    <p class="product-details__description"><%= product.description %></p>
+    <form class="product-details__cart" action="/cart" method="POST">
+      <button class="btn" type="submit">Add to Cart</button>
+      <input type="hidden" name="productId" value="<%= product.id %>">
+    </form>
+  </main>
+</body>
+
+</html>

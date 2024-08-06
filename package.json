@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-mongodb-project",
+  "version": "1.0.0",
+  "description": "NodeJS, ExpressJS and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "start-server": "node app.js"
+  },
+  "author": "dangnhingo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-handlebars": "^3.1.0",
+    "mongodb": "^6.7.0",
+    "mongoose": "^8.4.3",
+    "html": "^1.0.0",
+    "nodemon": "^3.1.4"
+  }
+}
