@@ -15,7 +15,7 @@ exports.getProducts = (req, res, next) => {
 exports.getProductDetails = (req, res, next) => {
   const productId = req.params.productId;
 
-  ProductModel.findByPk(productId)
+  ProductModel.findProductById(productId)
     .then(product => {
       if (!product) {
         return res.redirect('/');

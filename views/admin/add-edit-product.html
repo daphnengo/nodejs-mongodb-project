@@ -60,7 +60,7 @@
             <textarea name="description" id="description" rows="5"><%= product.description %></textarea>
         </div>
         <% if (isEdit) { %>
-          <input type="hidden" value="<%= product.id %>" name="productId">
+          <input type="hidden" value="<%= product._id %>" name="productId">
         <% } %>
         <button class="btn" type="submit"><%= btnLabel %></button>
     </form>

@@ -51,10 +51,10 @@
             <div class="card__content">
             </div>
             <div class="card__actions">
-              <a href="/product-details/<%= product.id %>" class="btn">Details</a>
+              <a href="/product-details/<%= product._id %>" class="btn">Details</a>
               <form action="/add-to-cart" method="POST">
                 <button class="btn" type="submit">Add to Cart</button>
-                <input type="hidden" name="productId" value="<%= product.id %>">
+                <input type="hidden" name="productId" value="<%= product._id %>">
               </form>
             </div>
           </article>
