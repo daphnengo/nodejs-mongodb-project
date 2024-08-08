@@ -2,20 +2,34 @@ const mongodb = require('mongodb');
 const { getDb } = require('../util/database');
 
 class Product {
-  constructor(title, price, description, imageUrl) {
+  constructor(title, price, description, imageUrl, id) {
     this.title = title;
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
+    // this._id: new ObjectId('66b195c62603f85f666c3e8b')
+    this._id = id ? mongodb.ObjectId.createFromHexString(id) : null;
   }
 
   save() {
     const db = getDb();
+    let dbOp;
 
-    // In MongoDB, we have Database, Collection and Document
+    // In MongoDB, there are Database, Collection and Document
     // "products" is a collection
-    return db.collection('products')
-      .insertOne(this)
+    if (this._id) {
+      // Update the product
+      dbOp = db.collection('products')
+        .updateOne(
+          { _id: this._id },
+          { $set: this },
+        );
+    } else {
+      // Create a new product
+      dbOp = db.collection('products').insertOne(this);
+    }
+
+    return dbOp
       .then(result => {
         console.log(result);
       })
@@ -52,6 +66,14 @@ class Product {
         console.log(product);
         return product;
       })
+      .catch(error => console.log(error));
+  }
+
+  static deleteProductById(productId) {
+    const db = getDb();
+
+    return db.collection('products')
+      .deleteOne({ _id: mongodb.ObjectId.createFromHexString(productId) })
       .catch(error => console.log(error));
   }
 }
