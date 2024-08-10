@@ -18,7 +18,15 @@ exports.postAddProduct = (req, res, next) => {
     price,
     description,
   } = req.body;
-  const product = new ProductModel(title, price, description, imageUrl);
+
+  const product = new ProductModel(
+    title,
+    price,
+    description,
+    imageUrl,
+    null, // productId
+    req.user._id,
+  );
 
   product.save()
     .then(() => {
