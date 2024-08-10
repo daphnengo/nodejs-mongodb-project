@@ -3,6 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { mongoConnect } = require('./util/database');
+
+const User = require('./models/user');
+
 const errorsRoutes = require('./routes/errors');
 const storeRoutes = require('./routes/store');
 const adminRoutes = require('./routes/admin');
@@ -28,13 +31,14 @@ app.use(express.static(__dirname + '/views'));
 // the middleware is only created after the server is connected successfully
 // therefore, we only have a dummy user created below
 app.use((req, res, next) => {
-  // User.findByPk(1)
-  //   .then(user => {
-  //     req.user = user;
-  //     next();
-  //   })
-  //   .catch(err => console.log(err));
-  next();
+  // create user manually in MongoDB Compass
+  // then paste userId here
+  User.findUserById("66b7fb2deb548930d1fffecb")
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
 });
 
 app.use(errorsRoutes);
