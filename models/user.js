@@ -102,6 +102,41 @@ class User {
       );
   }
 
+  createOrder() {
+    const db = getDb();
+
+    return this.getCart().then(products => {
+      const order = {
+        items: products,
+        user: {
+          _id: this._id,
+          name: this.name,
+        },
+      };
+
+      // update the cart items into "orders" collection
+      return db.collection('orders').insertOne(order);
+    })
+    .then(() => {
+      this.cart = { items: [] };
+
+      return db.collection('users')
+        .updateOne(
+          { _id: this._id },
+          // empty the cart after creating order
+          { $set: { cart: { items: [] } } }
+        );
+    });
+  }
+
+  getOrders() {
+    const db = getDb();
+
+    return db.collection('orders')
+      .find({"user._id": this._id})
+      .toArray();
+  }
+
   static findUserById(userId) {
     const db = getDb();
 

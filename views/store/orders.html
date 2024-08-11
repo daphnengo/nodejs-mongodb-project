@@ -39,10 +39,10 @@
     <% if (orders.length > 0) { %>
       <% orders.forEach(order => { %>
         <article class="orders">
-          <h1 class="orders__id">Order #<%= order.id %></h1>
+          <h1 class="orders__id">Order #<%= order._id %></h1>
           <div class="orders__content">
-            <% order.products.forEach(product => { %>
-              <li><%= product.title %> - Qty: <%= product.orderItem.quantity %></li>
+            <% order.items.forEach(product => { %>
+              <li><%= product.title %> - Qty: <%= product.quantity %></li>
             <% }); %>
             </div>
         </article>
