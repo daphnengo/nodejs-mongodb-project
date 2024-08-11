@@ -23,15 +23,25 @@ class User {
   addToCart(product) {
     const db = getDb();
     let newQuantity = 1;
-    const updatedCartItems = [...this.cart.items];
+    let updatedCartItems = [];
+    const cartItems = this.cart?.items;
 
-    const cartProductIndex = this.cart.items.findIndex(cartItem => {
-      return cartItem.productId.toString() === product._id.toString();
-    });
+    if (cartItems) {
+      updatedCartItems = [...cartItems];
 
-    if (cartProductIndex > 0 || cartProductIndex === 0) {
-      newQuantity = this.cart.items[cartProductIndex].quantity + 1;
-      updatedCartItems[cartProductIndex].quantity = newQuantity;
+      const cartProductIndex = cartItems.findIndex(cartItem => {
+        return cartItem.productId.toString() === product._id.toString();
+      });
+
+      if (cartProductIndex > 0 || cartProductIndex === 0) {
+        newQuantity = cartItems[cartProductIndex].quantity + 1;
+        updatedCartItems[cartProductIndex].quantity = newQuantity;
+      } else {
+        updatedCartItems.push({
+          productId: product._id,
+          quantity: newQuantity,
+        });
+      }
     } else {
       updatedCartItems.push({
         productId: product._id,
@@ -51,22 +61,29 @@ class User {
 
   getCart() {
     const db = getDb();
-    const productIds = this.cart.items.map(item => {
+    const cartItems = this.cart?.items;
+
+    // list of productId in the cart
+    const productIds = cartItems.map(item => {
       return item.productId;
     });
 
     return db.collection('products')
-      .find({ _id: { $in: productIds } })
+      .find({ _id: { $in: productIds || [] } })
       .toArray()
       .then(products => {
-        return products.map(product => {
+        const productsInCart = products.map(product => {
+          const cartItem = cartItems.find(item => {
+            return item.productId.toString() === product._id.toString();
+          });
+
           return {
             ...product,
-            quantity: this.cart.items.find(item => {
-              return item.productId.toString() === product._id.toString();
-            }).quantity,
+            quantity: cartItem.quantity,
           };
         });
+
+        return productsInCart;
       });
   }
 
