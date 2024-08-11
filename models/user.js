@@ -87,6 +87,21 @@ class User {
       });
   }
 
+  deleteItemFromCart(productId) {
+    const db = getDb();
+    // filter items in the cart which has productId is different with
+    // the product user wants to delete
+    const upgradedCartItems = this.cart.items.filter(item => {
+      return item.productId.toString() !== productId.toString();
+    });
+
+    return db.collection('users')
+      .updateOne(
+        { _id: this._id },
+        { $set: { cart: { items: upgradedCartItems } } }
+      );
+  }
+
   static findUserById(userId) {
     const db = getDb();
 

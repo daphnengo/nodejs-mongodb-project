@@ -46,7 +46,7 @@ exports.postAddToCart = (req, res, next) => {
 exports.getCart = (req, res, next) => {
   req.user.getCart()
     .then(products => {
-      console.log('getCart products', products);
+      console.log('getCart products: ', products);
       res.render('store/cart.html', {
         path: '/cart',
         pageTitle: 'Your Cart',
@@ -56,21 +56,13 @@ exports.getCart = (req, res, next) => {
     .catch(error => console.log(error));
 };
 
-// exports.postCartDeleteItem = (req, res, next) => {
-//   const productId = req.body.productId;
+exports.postCartDeleteItem = (req, res, next) => {
+  const productId = req.body.productId;
 
-//   req.user.getCart()
-//     .then(cart => {
-//       return cart.getProducts({ where: { id: productId } });
-//     })
-//     .then(products => {
-//       const product = products[0];
-//       // delete that item in cart
-//       return product.cartItem.destroy();
-//     })
-//     .then(() => res.redirect('/cart'))
-//     .catch(error => console.log(error));
-// };
+  req.user.deleteItemFromCart(productId)
+    .then(() => res.redirect('/cart'))
+    .catch(error => console.log(error));
+};
 
 // exports.postCreateOrder = (req, res, next) => {
 //   let fetchedCart;
