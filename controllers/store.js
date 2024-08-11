@@ -33,37 +33,45 @@ exports.getProductDetails = (req, res, next) => {
 exports.postAddToCart = (req, res, next) => {
   const productId = req.body.productId;
 
-  let fetchedCart;
-  let updatedQuantity;
-
-  req.user.getCart()
-    .then(cart => {
-      fetchedCart = cart;
-      return cart.getProducts({ where: { id: productId }})
-    })
-    .then(products => {
-      let product;
-      if (products.length) {
-        product = products[0];
-      }
-
-      if (product) {
-        const quantity = product.cartItem.quantity;
-        updatedQuantity = quantity + 1;
-        return product;
-      }
-
-      // If there is no products in cart, find in Products database
-      return ProductModel.findByPk(productId);
-    })
+  ProductModel.findProductById(productId)
     .then(product => {
-      // update the product quantity in the cart
-      return fetchedCart.addProduct(product, {
-        through: { quantity: updatedQuantity || 1 }
-      });
+      return req.user.addToCart(product);
     })
-    .then(() => res.redirect('/cart'))
-    .catch(error => console.log(error));
+    .then(result => {
+      console.log(result)
+    });
+
+  // let fetchedCart;
+  // let updatedQuantity;
+
+  // req.user.getCart()
+  //   .then(cart => {
+  //     fetchedCart = cart;
+  //     return cart.getProducts({ where: { id: productId }})
+  //   })
+  //   .then(products => {
+  //     let product;
+  //     if (products.length) {
+  //       product = products[0];
+  //     }
+
+  //     if (product) {
+  //       const quantity = product.cartItem.quantity;
+  //       updatedQuantity = quantity + 1;
+  //       return product;
+  //     }
+
+  //     // If there is no products in cart, find in Products database
+  //     return ProductModel.findByPk(productId);
+  //   })
+  //   .then(product => {
+  //     // update the product quantity in the cart
+  //     return fetchedCart.addProduct(product, {
+  //       through: { quantity: updatedQuantity || 1 }
+  //     });
+  //   })
+  //   .then(() => res.redirect('/cart'))
+  //   .catch(error => console.log(error));
 };
 
 exports.getCart = (req, res, next) => {
